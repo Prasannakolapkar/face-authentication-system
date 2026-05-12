@@ -1,7 +1,9 @@
         // --- API Config ---
+        // --- API Config ---
+        // Automatically detects if running locally or on Render
         const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
             ? "http://localhost:8000" 
-            : "https://fraud-detection-system-8917.onrender.com"; 
+            : window.location.origin; 
 
         const state = {
             currentPage: 'home',

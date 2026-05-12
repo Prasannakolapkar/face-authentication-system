@@ -126,6 +126,11 @@ if FASTAPI_AVAILABLE:
 
     # --- Endpoints ---
 
+    @app.get("/", response_class=HTMLResponse)
+    async def root():
+        """Redirect root to the static index page."""
+        return FileResponse(os.path.join(static_path, "index.html"))
+
     @app.get("/health")
     async def health_check():
         """Deployment health check."""
@@ -413,4 +418,5 @@ if FASTAPI_AVAILABLE:
         }
 
     if __name__ == "__main__":
-        uvicorn.run(app, host="0.0.0.0", port=8000, reload=False)
+        port = int(os.environ.get("PORT", 8000))
+        uvicorn.run(app, host="0.0.0.0", port=port, reload=False)

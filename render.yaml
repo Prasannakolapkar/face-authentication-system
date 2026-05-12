@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: fraud-detection-full
+    env: python
+    buildCommand: pip install -r requirements.deploy.txt
+    startCommand: uvicorn src.api.server:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0
+      - key: FASTAPI_ENV
+        value: production
