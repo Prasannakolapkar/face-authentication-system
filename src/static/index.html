@@ -52,15 +52,40 @@
                     Register
                 </button>
                 <button class="btn btn-outline" style="border-color: var(--warning); color: var(--text-main);"
-                    onclick="showPage('dashboard')">
+                    onclick="showPage('admin-login')">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="3" width="7" height="7" />
                         <rect x="14" y="3" width="7" height="7" />
                         <rect x="14" y="14" width="7" height="7" />
                         <rect x="3" y="14" width="7" height="7" />
                     </svg>
-                    Admin Dashboard
+                    Admin Login
                 </button>
+            </div>
+        </section>
+
+        <!-- Admin Login Page -->
+        <section id="admin-login-page" class="page">
+            <div class="glass-card" style="max-width: 420px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2 style="margin: 0;">Admin Login</h2>
+                    <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;"
+                        onclick="showPage('home')">← Back</button>
+                </div>
+                <p style="color: var(--text-dim); margin-bottom: 1.5rem; font-size: 0.9rem;">Restricted area — administrators only.</p>
+                <div class="input-group">
+                    <label>Admin Name</label>
+                    <input type="text" id="admin-username" placeholder="Enter Admin Name" autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <label>Admin Password</label>
+                    <input type="password" id="admin-password" placeholder="Enter Admin Password" autocomplete="off"
+                        onkeydown="if(event.key==='Enter') handleAdminLogin()">
+                </div>
+                <div id="admin-login-error"
+                    style="color: var(--error); font-weight: 600; margin: 0.5rem 0; display: none; font-size: 0.9rem;"></div>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;"
+                    onclick="handleAdminLogin()">Login as Admin</button>
             </div>
         </section>
 
@@ -70,7 +95,7 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                     <h2 style="margin: 0;">Admin Dashboard</h2>
                     <button class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.85rem;"
-                        onclick="showPage('home')">← Back</button>
+                        onclick="adminLogout()">Logout</button>
                 </div>
 
                 <!-- Stats Cards -->
@@ -284,6 +309,7 @@
                         <video id="tx-video" autoplay playsinline></video>
                         <div class="face-overlay"></div>
                         <div id="liveness-overlay">Initializing Face Check...</div>
+                        <div id="tx-scan-line" style="display:none; position:absolute; left:0; right:0; height:2px; background: var(--primary); box-shadow: 0 0 8px var(--primary); animation: scan 2s linear infinite; top:0;"></div>
                     </div>
                     <!-- Manual auth button restored, but locked until liveness passes -->
                     <button id="capture-btn" class="btn btn-primary" style="width: 100%; margin-top: 1rem;"

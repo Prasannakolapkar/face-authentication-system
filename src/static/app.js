@@ -20,7 +20,10 @@
             consecutiveOpenFrames: 0,
             hasSeenOpenEyes: false, // Ensures we see open eyes before counting a blink
             faceMesh: null,
-            camera: null
+            camera: null,
+            // ── Admin Auth State (separate from user auth) ──────────────
+            isAdminAuthenticated: false,
+            adminToken: null
         };
 
         // --- Helper: Eye Aspect Ratio (EAR) ---
@@ -123,6 +126,21 @@
         // --- Navigation ---
         function showPage(pageId) {
             state.currentPage = pageId;
+
+            // ── Admin Auth Guards ────────────────────────────────────
+            // Block non-admins from reaching the dashboard
+            if (pageId === 'dashboard' && !state.isAdminAuthenticated) {
+                showToast('Admin access required. Please login as Admin.');
+                showPage('admin-login');
+                return;
+            }
+            // If already authenticated as admin, skip the login page and go straight to dashboard
+            if (pageId === 'admin-login' && state.isAdminAuthenticated) {
+                showPage('dashboard');
+                return;
+            }
+            // ────────────────────────────────────────────────────────
+
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(`${pageId}-page`).classList.add('active');
 
@@ -851,6 +869,70 @@
                 }
             });
         });
+
+        // ── ADMIN LOGIN LOGIC ──────────────────────────────────────────
+        // Restore admin session from sessionStorage on page load
+        (function restoreAdminSession() {
+            const savedAdminToken = sessionStorage.getItem('admin_token');
+            if (savedAdminToken) {
+                state.isAdminAuthenticated = true;
+                state.adminToken = savedAdminToken;
+            }
+        })();
+
+        async function handleAdminLogin() {
+            const username = document.getElementById('admin-username').value.trim();
+            const password = document.getElementById('admin-password').value;
+            const errorEl = document.getElementById('admin-login-error');
+
+            errorEl.style.display = 'none';
+
+            if (!username || !password) {
+                errorEl.textContent = 'Please enter Admin Name and Password.';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_BASE}/admin/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    // Store admin token in sessionStorage (separate from user localStorage)
+                    state.isAdminAuthenticated = true;
+                    state.adminToken = data.access_token;
+                    sessionStorage.setItem('admin_token', data.access_token);
+
+                    // Clear the form fields
+                    document.getElementById('admin-username').value = '';
+                    document.getElementById('admin-password').value = '';
+
+                    showToast('Admin access granted.', 'success');
+                    showPage('dashboard');
+                } else {
+                    const data = await res.json();
+                    const msg = data.message || 'Invalid Admin Credentials';
+                    errorEl.textContent = msg;
+                    errorEl.style.display = 'block';
+                    document.getElementById('admin-password').value = '';
+                }
+            } catch (err) {
+                errorEl.textContent = 'Server connection lost. Please try again.';
+                errorEl.style.display = 'block';
+            }
+        }
+
+        function adminLogout() {
+            state.isAdminAuthenticated = false;
+            state.adminToken = null;
+            sessionStorage.removeItem('admin_token');
+            showToast('Logged out of Admin session.', 'success');
+            showPage('home');
+        }
 
         // --- Backend Integration Reference (How to connect to FraudDetection_Project backend) ---
         /*

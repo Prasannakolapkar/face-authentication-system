@@ -211,6 +211,40 @@ if FASTAPI_AVAILABLE:
         access_token = create_access_token(data={"sub": user["user_id"]})
         return {"access_token": access_token, "token_type": "bearer"}
 
+    # ── ADMIN AUTHENTICATION ────────────────────────────────────────
+    # Hardcoded admin credentials — validated on backend only, never exposed to frontend
+    ADMIN_USERNAME = "admin"
+    ADMIN_PASSWORD = "admin123"
+
+    class AdminLoginRequest(BaseModel):
+        username: str
+        password: str
+
+    @app.post("/admin/login", response_model=Token, summary="Admin login with hardcoded credentials")
+    async def admin_login(request: AdminLoginRequest):
+        """Admin-only login. Credentials are hardcoded and never stored in the database."""
+        if request.username != ADMIN_USERNAME or request.password != ADMIN_PASSWORD:
+            raise AppException(
+                status_code=401,
+                message="Invalid Admin Credentials",
+            )
+        # Issue a JWT token with role=admin so the frontend can identify the session type
+        access_token = create_access_token(data={"sub": ADMIN_USERNAME, "role": "admin"})
+        return {"access_token": access_token, "token_type": "bearer"}
+
+    @app.get("/admin/verify", summary="Verify that a token belongs to an admin session")
+    async def admin_verify(raw_token: str = Depends(oauth2_scheme)):
+        """Returns 200 OK only if the Authorization Bearer token has role=admin."""
+        from jose import JWTError, jwt as _jwt
+        from api.auth import SECRET_KEY, ALGORITHM
+        try:
+            payload = _jwt.decode(raw_token, SECRET_KEY, algorithms=[ALGORITHM])
+        except JWTError:
+            raise AppException(status_code=401, message="Invalid or expired token")
+        if payload.get("role") != "admin":
+            raise AppException(status_code=403, message="Admin access required")
+        return {"admin": True}
+
     @app.post("/enroll", summary="Enroll a new cardholder")
     async def enroll_user(request: EnrollmentRequest):
         # Admin check removed to allow public registration
