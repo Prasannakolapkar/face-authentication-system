@@ -155,3 +155,8 @@ This project was developed as part of the 4th Year Computer Engineering curricul
 **Dataset:** IEEE-CIS Fraud Detection dataset (Kaggle)  
 **CNN Base:** Inception-ResNet-V1 with ArcFace loss  
 **Evaluation:** 70/15/15 train/val/test split with SMOTE upsampling
+
+
+admin login:
+username - admin
+password - admin123

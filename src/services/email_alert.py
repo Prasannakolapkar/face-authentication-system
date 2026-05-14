@@ -51,7 +51,7 @@ def _send_email_async(user_email: str, amount: float, card_last4: str, timestamp
         # Create message container
         message = MIMEMultipart("alternative")
         message["Subject"] = "Security Alert: Unrecognized Payment Authentication Attempt"
-        message["From"] = f"SecurePay Alerts <{SMTP_SENDER_EMAIL}>"
+        message["From"] = f"KsheminPay Alerts <{SMTP_SENDER_EMAIL}>"
         message["To"] = recipient
 
         html_content = f"""

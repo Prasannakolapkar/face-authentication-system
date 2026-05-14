@@ -43,7 +43,14 @@ def initialize_firebase():
         )
 
     cred_path = os.environ.get("FIREBASE_CREDENTIALS_PATH", "serviceAccountKey.json")
-    abs_cred_path = os.path.abspath(cred_path)
+    
+    # If the path is not absolute, resolve it relative to the project root
+    if not os.path.isabs(cred_path):
+        # firebase_config.py is in src/, so project root is its parent directory
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        abs_cred_path = os.path.join(project_root, cred_path)
+    else:
+        abs_cred_path = cred_path
 
     if not os.path.isfile(abs_cred_path):
         raise RuntimeError(

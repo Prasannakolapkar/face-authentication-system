@@ -56,7 +56,7 @@ def run_liveness_and_recognition(face_engine, user_id: str, timeout: int = 5) ->
     last_recog_time = 0
     RECOG_INTERVAL = 0.5
 
-    window_name = 'SecurePay Liveness Verification'
+    window_name = 'KsheminPay Liveness Verification'
 
     while (time.time() - start_time) < timeout:
         ret, frame = cap.read()

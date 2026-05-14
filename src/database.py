@@ -64,7 +64,7 @@ class DatabaseManager:
     # --- User Operations ---
 
     def upsert_user(self, user_id: str, card_number: str, embedding: Optional[np.ndarray] = None, 
-                    password_hash: Optional[str] = None, role: str = "CARDHOLDER"):
+                    password_hash: Optional[str] = None, role: str = "CARDHOLDER", email: Optional[str] = None):
         """Add or update a cardholder."""
         embedding_blob = embedding.tobytes() if embedding is not None else None
         now = datetime.now().isoformat()
@@ -72,14 +72,15 @@ class DatabaseManager:
         with self._get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute('''
-                INSERT INTO users (user_id, card_number, face_embedding, password_hash, role, enrolled_at)
-                VALUES (?, ?, ?, ?, ?, ?)
+                INSERT INTO users (user_id, card_number, face_embedding, password_hash, role, email, enrolled_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(user_id) DO UPDATE SET
                     card_number = excluded.card_number,
                     face_embedding = COALESCE(excluded.face_embedding, users.face_embedding),
                     password_hash = COALESCE(excluded.password_hash, users.password_hash),
-                    role = COALESCE(excluded.role, users.role)
-            ''', (user_id, card_number, embedding_blob, password_hash, role, now))
+                    role = COALESCE(excluded.role, users.role),
+                    email = COALESCE(excluded.email, users.email)
+            ''', (user_id, card_number, embedding_blob, password_hash, role, email, now))
             conn.commit()
 
     def get_user(self, user_id: str) -> Optional[Dict]:

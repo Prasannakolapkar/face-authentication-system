@@ -4,62 +4,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SecurePay FaceAuth | Seamless Face Payments</title>
+    <title>KsheminPay | Secure Biometric Banking</title>
     <!-- Favicon -->
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <!-- MediaPipe Face Mesh -->
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/styles.css?v=3">
 </head>
 
 <body>
 
     <nav>
         <div class="logo" onclick="showPage('home')">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                <path d="M12 8v4M12 16h.01" stroke-linecap="round" />
-            </svg>
-            SecurePay
+            <img src="/static/logo.png" alt="KsheminPay" style="height: 38px; width: auto;">
+            <span style="color: var(--primary);">KsheminPay</span>
         </div>
-        <div id="nav-info" style="font-size: 0.9rem; color: var(--text-dim);">Made for FaceAuth</div>
+        <div id="nav-info">🔒 Biometric Banking</div>
     </nav>
 
     <main>
         <!-- Home Page -->
         <section id="home-page" class="page active fade-in">
-            <h1>Face Based Authentication</h1>
-            <p>Seamless, secure payments powered by Biometric AI.</p>
-            <div class="hero-actions">
-                <button class="btn btn-primary" onclick="showPage('transaction')">
+            <div class="hero-badge">🏦 AI-Powered Banking Security</div>
+            <h1>Make Secure Payments<br>With <span class="accent">KsheminPay</span></h1>
+            <p>Biometric face authentication meets enterprise-grade fraud detection. Your identity is your password.</p>
+            <div class="hero-actions" style="flex-direction: column; align-items: center; max-width: 300px; margin: 0 auto;">
+                <button class="btn btn-primary" style="width: 100%;" onclick="showPage('transaction')">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 4H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z" />
                         <path d="M1 10h22" />
                     </svg>
-                    Make Transaction
+                    Make a Payment
                 </button>
-                <button class="btn btn-outline" onclick="showPage('register')">
+                <button class="btn btn-primary" style="width: 100%;" onclick="showPage('register')">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                         <circle cx="8.5" cy="7" r="4" />
                         <line x1="20" y1="8" x2="20" y2="14" />
                         <line x1="17" y1="11" x2="23" y2="11" />
                     </svg>
-                    Register
+                    Create Account
                 </button>
-                <button class="btn btn-outline" style="border-color: var(--warning); color: var(--text-main);"
-                    onclick="showPage('admin-login')">
+                <button class="btn btn-primary" style="width: 100%;" onclick="showPage('admin-login')">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="3" width="7" height="7" />
-                        <rect x="14" y="3" width="7" height="7" />
-                        <rect x="14" y="14" width="7" height="7" />
-                        <rect x="3" y="14" width="7" height="7" />
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                     </svg>
-                    Admin Login
+                    Admin Portal
                 </button>
             </div>
         </section>
@@ -72,7 +70,8 @@
                     <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;"
                         onclick="showPage('home')">← Back</button>
                 </div>
-                <p style="color: var(--text-dim); margin-bottom: 1.5rem; font-size: 0.9rem;">Restricted area — administrators only.</p>
+                <p style="color: var(--text-dim); margin-bottom: 1.5rem; font-size: 0.9rem;">Restricted area —
+                    administrators only.</p>
                 <div class="input-group">
                     <label>Admin Name</label>
                     <input type="text" id="admin-username" placeholder="Enter Admin Name" autocomplete="off">
@@ -83,7 +82,8 @@
                         onkeydown="if(event.key==='Enter') handleAdminLogin()">
                 </div>
                 <div id="admin-login-error"
-                    style="color: var(--error); font-weight: 600; margin: 0.5rem 0; display: none; font-size: 0.9rem;"></div>
+                    style="color: var(--error); font-weight: 600; margin: 0.5rem 0; display: none; font-size: 0.9rem;">
+                </div>
                 <button class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;"
                     onclick="handleAdminLogin()">Login as Admin</button>
             </div>
@@ -93,63 +93,44 @@
         <section id="dashboard-page" class="page">
             <div class="glass-card" style="max-width: 700px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                    <h2 style="margin: 0;">Admin Dashboard</h2>
+                    <h2 style="margin: 0; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.03em;">Admin Dashboard
+                    </h2>
                     <button class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.85rem;"
                         onclick="adminLogout()">Logout</button>
                 </div>
 
                 <!-- Stats Cards -->
                 <div style="display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;">
-                    <div
-                        style="flex: 1; min-width: 120px; background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,212,255,0.05)); border: 1px solid rgba(0,212,255,0.3); border-radius: 16px; padding: 1.2rem; text-align: center;">
-                        <div id="stat-total-users" style="font-size: 2.5rem; font-weight: 700; color: var(--primary);">-
-                        </div>
-                        <div style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.3rem;">Registered Users
-                        </div>
+                    <div class="stat-card"
+                        style="background: linear-gradient(135deg, rgba(192,57,43,0.12), rgba(192,57,43,0.04)); border-color: rgba(192,57,43,0.25);">
+                        <div id="stat-total-users" class="stat-card-value" style="color: var(--primary);">-</div>
+                        <div class="stat-card-label">Registered Users</div>
                     </div>
-                    <div
-                        style="flex: 1; min-width: 120px; background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(16,185,129,0.05)); border: 1px solid rgba(16,185,129,0.3); border-radius: 16px; padding: 1.2rem; text-align: center;">
-                        <div id="stat-total-tx" style="font-size: 2.5rem; font-weight: 700; color: var(--success);">-
-                        </div>
-                        <div style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.3rem;">Total Transactions
-                        </div>
+                    <div class="stat-card"
+                        style="background: linear-gradient(135deg, rgba(16,185,129,0.12), rgba(16,185,129,0.04)); border-color: rgba(16,185,129,0.25);">
+                        <div id="stat-total-tx" class="stat-card-value" style="color: var(--success);">-</div>
+                        <div class="stat-card-label">Total Transactions</div>
                     </div>
-                    <div
-                        style="flex: 1; min-width: 120px; background: linear-gradient(135deg, rgba(244,63,94,0.15), rgba(244,63,94,0.05)); border: 1px solid rgba(244,63,94,0.3); border-radius: 16px; padding: 1.2rem; text-align: center;">
-                        <div id="stat-blocked-tx" style="font-size: 2.5rem; font-weight: 700; color: var(--error);">-
-                        </div>
-                        <div style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.3rem;">Blocked (Fraud)
-                        </div>
+                    <div class="stat-card"
+                        style="background: linear-gradient(135deg, rgba(245,158,11,0.12), rgba(245,158,11,0.04)); border-color: rgba(245,158,11,0.25);">
+                        <div id="stat-blocked-tx" class="stat-card-value" style="color: var(--warning);">-</div>
+                        <div class="stat-card-label">Blocked (Fraud)</div>
                     </div>
                 </div>
 
                 <!-- Users Table -->
-                <h3
-                    style="margin-bottom: 1rem; color: var(--text-dim); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">
-                    Registered Users</h3>
+                <h3 class="table-section-title">Registered Users</h3>
                 <div style="overflow-x: auto; margin-bottom: 3rem;">
                     <table id="users-table"
                         style="width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.9rem;">
                         <thead>
                             <tr style="text-align: left;">
-                                <th
-                                    style="padding: 0.8rem 1rem; color: var(--primary); border-bottom: 1px solid var(--glass-border); font-weight: 600;">
-                                    #</th>
-                                <th
-                                    style="padding: 0.8rem 1rem; color: var(--primary); border-bottom: 1px solid var(--glass-border); font-weight: 600;">
-                                    User ID</th>
-                                <th
-                                    style="padding: 0.8rem 1rem; color: var(--primary); border-bottom: 1px solid var(--glass-border); font-weight: 600;">
-                                    Email</th>
-                                <th
-                                    style="padding: 0.8rem 1rem; color: var(--primary); border-bottom: 1px solid var(--glass-border); font-weight: 600;">
-                                    Card Number</th>
-                                <th
-                                    style="padding: 0.8rem 1rem; color: var(--primary); border-bottom: 1px solid var(--glass-border); font-weight: 600;">
-                                    Role</th>
-                                <th
-                                    style="padding: 0.8rem 1rem; color: var(--primary); border-bottom: 1px solid var(--glass-border); font-weight: 600;">
-                                    Enrolled</th>
+                                <th class="dash-th">#</th>
+                                <th class="dash-th">User ID</th>
+                                <th class="dash-th">Email</th>
+                                <th class="dash-th">Card Number</th>
+                                <th class="dash-th">Role</th>
+                                <th class="dash-th">Enrolled</th>
                             </tr>
                         </thead>
                         <tbody id="users-table-body">
@@ -162,33 +143,19 @@
                 </div>
 
                 <!-- Transaction History Table -->
-                <h3
-                    style="margin-bottom: 1rem; color: var(--text-dim); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">
-                    Recent Transactions</h3>
+                <h3 class="table-section-title">Recent Transactions</h3>
                 <div style="overflow-x: auto; margin-bottom: 3rem; max-height: 400px; overflow-y: auto;">
                     <table id="tx-table"
                         style="width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.9rem;">
                         <thead
                             style="position: sticky; top: 0; background: var(--glass-bg); backdrop-filter: blur(10px); z-index: 1;">
                             <tr style="text-align: left;">
-                                <th
-                                    style="padding: 0.8rem 1rem; color: var(--primary); border-bottom: 1px solid var(--glass-border); font-weight: 600;">
-                                    Time</th>
-                                <th
-                                    style="padding: 0.8rem 1rem; color: var(--primary); border-bottom: 1px solid var(--glass-border); font-weight: 600;">
-                                    User</th>
-                                <th
-                                    style="padding: 0.8rem 1rem; color: var(--primary); border-bottom: 1px solid var(--glass-border); font-weight: 600;">
-                                    Amount</th>
-                                <th
-                                    style="padding: 0.8rem 1rem; color: var(--primary); border-bottom: 1px solid var(--glass-border); font-weight: 600;">
-                                    Decision</th>
-                                <th
-                                    style="padding: 0.8rem 1rem; color: var(--primary); border-bottom: 1px solid var(--glass-border); font-weight: 600;">
-                                    Fraud Score</th>
-                                <th
-                                    style="padding: 0.8rem 1rem; color: var(--primary); border-bottom: 1px solid var(--glass-border); font-weight: 600;">
-                                    Face Match</th>
+                                <th class="dash-th">Time</th>
+                                <th class="dash-th">User</th>
+                                <th class="dash-th">Amount</th>
+                                <th class="dash-th">Decision</th>
+                                <th class="dash-th">Fraud Score</th>
+                                <th class="dash-th">Face Match</th>
                             </tr>
                         </thead>
                         <tbody id="tx-table-body">
@@ -201,29 +168,23 @@
                 </div>
 
                 <!-- System Settings Info -->
-                <h3
-                    style="margin-bottom: 1rem; color: var(--text-dim); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">
-                    System Settings</h3>
-                <div
-                    style="display: flex; gap: 1rem; flex-wrap: wrap; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1.5rem;">
+                <h3 class="table-section-title">System Settings</h3>
+                <div class="settings-panel">
                     <div style="flex: 1; min-width: 150px;">
-                        <div style="font-size: 0.85rem; color: var(--text-dim);">ML Fraud Threshold</div>
-                        <div id="set-fraud-thresh" style="font-size: 1.2rem; font-weight: 600; font-family: monospace;">
-                            -</div>
+                        <div class="settings-item-label">ML Fraud Threshold</div>
+                        <div id="set-fraud-thresh" class="settings-item-value">-</div>
                     </div>
                     <div style="flex: 1; min-width: 150px;">
-                        <div style="font-size: 0.85rem; color: var(--text-dim);">ML Review Threshold</div>
-                        <div id="set-review-thresh"
-                            style="font-size: 1.2rem; font-weight: 600; font-family: monospace;">-</div>
+                        <div class="settings-item-label">ML Review Threshold</div>
+                        <div id="set-review-thresh" class="settings-item-value">-</div>
                     </div>
                     <div style="flex: 1; min-width: 150px;">
-                        <div style="font-size: 0.85rem; color: var(--text-dim);">Face Match Threshold</div>
-                        <div id="set-face-thresh" style="font-size: 1.2rem; font-weight: 600; font-family: monospace;">-
-                        </div>
+                        <div class="settings-item-label">Face Match Threshold</div>
+                        <div id="set-face-thresh" class="settings-item-value">-</div>
                     </div>
                     <div style="flex: 1; min-width: 150px;">
-                        <div style="font-size: 0.85rem; color: var(--text-dim);">Face Engine Mode</div>
-                        <div id="set-face-mode" style="font-size: 1.2rem; font-weight: 600;">-</div>
+                        <div class="settings-item-label">Face Engine Mode</div>
+                        <div id="set-face-mode" class="settings-item-value">-</div>
                     </div>
                 </div>
 
@@ -309,7 +270,9 @@
                         <video id="tx-video" autoplay playsinline></video>
                         <div class="face-overlay"></div>
                         <div id="liveness-overlay">Initializing Face Check...</div>
-                        <div id="tx-scan-line" style="display:none; position:absolute; left:0; right:0; height:2px; background: var(--primary); box-shadow: 0 0 8px var(--primary); animation: scan 2s linear infinite; top:0;"></div>
+                        <div id="tx-scan-line"
+                            style="display:none; position:absolute; left:0; right:0; height:2px; background: var(--primary); box-shadow: 0 0 8px var(--primary); animation: scan 2s linear infinite; top:0;">
+                        </div>
                     </div>
                     <!-- Manual auth button restored, but locked until liveness passes -->
                     <button id="capture-btn" class="btn btn-primary" style="width: 100%; margin-top: 1rem;"
@@ -430,14 +393,18 @@
                 <div id="reg-step-4" style="display: none">
                     <div class="success-circle">✓</div>
                     <h3>Registration Complete</h3>
-                    <p style="color: var(--text-dim); margin-top: 1rem">You can now pay using your face at any SecurePay
-                        merchant.</p>
+                    <p style="color: var(--text-dim); margin-top: 1rem">You can now make secure payments using your face
+                        at any KsheminPay merchant terminal.</p>
                     <button class="btn btn-primary" style="width: 100%; margin-top: 2rem"
                         onclick="showPage('home')">Start Transacting</button>
                 </div>
             </div>
         </section>
     </main>
+
+    <footer>
+        &copy; 2025 <a href="#">KsheminPay</a> &mdash; Biometric Banking Platform. All rights reserved.
+    </footer>
 
     <div id="toast">Invalid Card Details</div>
 

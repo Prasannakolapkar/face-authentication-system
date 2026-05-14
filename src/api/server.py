@@ -19,6 +19,12 @@ from datetime import datetime
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 
 try:
+    from dotenv import load_dotenv
+    load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../.env"))
+except ImportError:
+    pass
+
+try:
     from fastapi import FastAPI, Request, BackgroundTasks, HTTPException, Form, Depends
     from fastapi.middleware.cors import CORSMiddleware
     from fastapi.staticfiles import StaticFiles
@@ -26,7 +32,7 @@ try:
     from fastapi.security import OAuth2PasswordRequestForm
     from pydantic import BaseModel, Field
     import uvicorn
-    from api.auth import create_access_token, get_current_user, pwd_context
+    from api.auth import create_access_token, get_current_user, pwd_context, oauth2_scheme
     from api.exceptions import AppException
     FASTAPI_AVAILABLE = True
 except ImportError as e:
@@ -267,13 +273,13 @@ if FASTAPI_AVAILABLE:
 
         result = pipeline.enroll_cardholder(request.user_id, request.card_number, face_image=face_image)
         hashed_pw = pwd_context.hash(request.user_id + "123")
-        pipeline.db_manager.upsert_user(request.user_id, request.card_number, role="CARDHOLDER", password_hash=hashed_pw)
-        
-        # Save the email if provided
-        if request.email:
-            with pipeline.db_manager._get_connection() as conn:
-                conn.execute('UPDATE users SET email = ? WHERE user_id = ?', (request.email, request.user_id))
-                conn.commit()
+        pipeline.db_manager.upsert_user(
+            user_id=request.user_id, 
+            card_number=request.card_number, 
+            role="CARDHOLDER", 
+            password_hash=hashed_pw,
+            email=request.email
+        )
         
         return result
 
