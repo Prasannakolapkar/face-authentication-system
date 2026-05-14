@@ -22,7 +22,14 @@ import joblib
 # loader state, causing torch's _load_dll_libraries() to fail with WinError 1114.
 from models.face_recognition import FaceRecognitionEngine
 from models.fraud_classifier import FraudClassifier
-from database import DatabaseManager
+import os as _os
+if _os.environ.get("USE_FIREBASE", "").lower() == "true":
+    from firebase_database import FirestoreManager as DatabaseManager
+    print("[INFO] Database backend: Firebase Firestore")
+else:
+    from database import DatabaseManager
+    print("[INFO] Database backend: SQLite (local)")
+
 
 # Import the new email alert service
 from services.email_alert import send_fraud_alert
